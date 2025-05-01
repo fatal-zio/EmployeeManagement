@@ -1,4 +1,5 @@
 ﻿using EmployeeManagement.Business;
+using EmployeeManagement.Business.EventArguments;
 using EmployeeManagement.Business.Exceptions;
 using EmployeeManagement.DataAccess.Entities;
 using EmployeeManagement.Test.Services;
@@ -96,6 +97,20 @@ namespace EmployeeManagement.Test
             {
                 await employeeService.GiveRaiseAsync(internalEmployee, 50);
             });
+        }
+
+        [Fact]
+        public async Task NotifyOfAbsence_EmployeeIsAbsent_OnEmployeeIsAbsentMustBeTriggered()
+        {
+            // Arrange
+            var employeeService = new EmployeeService(new EmployeeManagementTestDataRepository(), new EmployeeFactory());
+            var internalEmployee = new InternalEmployee("Brook", "Cannon", 5, 3000, false, 1);
+
+            // Act & Assert
+            Assert.Raises<EmployeeIsAbsentEventArgs>(
+                handler => employeeService.EmployeeIsAbsent += handler,
+                handler => employeeService.EmployeeIsAbsent -= handler,
+                () => employeeService.NotifyOfAbsence(internalEmployee));
         }
     }
 }
