@@ -32,5 +32,13 @@ namespace EmployeeManagement.Test
 
             Assert.Equal(2500, employee.Salary, 0);
         }
+
+        [Fact]
+        public void CreateEmployee_IsExternalIsTrue_ReturnTypeMustBeExternalEmployee()
+        {
+            var employeeFactory = new EmployeeFactory();
+            var employee = employeeFactory.CreateEmployee("Jayme", "Desrosiers", "Company", true);
+            Assert.IsType<ExternalEmployee>(employee);
+        }
     }
 }

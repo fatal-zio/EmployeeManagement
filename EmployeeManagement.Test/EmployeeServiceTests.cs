@@ -100,7 +100,7 @@ namespace EmployeeManagement.Test
         }
 
         [Fact]
-        public async Task NotifyOfAbsence_EmployeeIsAbsent_OnEmployeeIsAbsentMustBeTriggered()
+        public void NotifyOfAbsence_EmployeeIsAbsent_OnEmployeeIsAbsentMustBeTriggered()
         {
             // Arrange
             var employeeService = new EmployeeService(new EmployeeManagementTestDataRepository(), new EmployeeFactory());
