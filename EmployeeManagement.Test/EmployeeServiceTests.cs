@@ -1,13 +1,12 @@
-﻿using EmployeeManagement.Business;
-using EmployeeManagement.Business.EventArguments;
+﻿using EmployeeManagement.Business.EventArguments;
 using EmployeeManagement.Business.Exceptions;
 using EmployeeManagement.DataAccess.Entities;
 using EmployeeManagement.Test.Fixtures;
-using EmployeeManagement.Test.Services;
 
 namespace EmployeeManagement.Test
 {
-    public class EmployeeServiceTests(EmployeeServiceFixture employeeServiceFixture) : IClassFixture<EmployeeServiceFixture>
+    [Collection("EmployeeServiceCollection")]
+    public class EmployeeServiceTests(EmployeeServiceFixture employeeServiceFixture) //: IClassFixture<EmployeeServiceFixture>
     {
         private readonly EmployeeServiceFixture _employeeServiceFixture = employeeServiceFixture;
 
