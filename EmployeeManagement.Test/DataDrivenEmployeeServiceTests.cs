@@ -14,8 +14,6 @@ namespace EmployeeManagement.Test
         public void CreateInternalEmployee_InternalEmployeeCreated_MustHaveAttendedSecondObligatoryCourse(
             Guid courseId)
         {
-            // Arrange 
-
             // Act
             var internalEmployee = _employeeServiceFixture.EmployeeService
                 .CreateInternalEmployee("Brooklyn", "Cannon");
