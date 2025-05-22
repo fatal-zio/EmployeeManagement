@@ -10,7 +10,6 @@ namespace EmployeeManagement.Test
         public void CreateInternalEmployee_InternalEmployeeCreated_MustHaveAttendedFirstObligatoryCourse_WithObject()
         {
             // Arrange
-
             var obligatoryCourse = _employeeServiceFixture
                 .EmployeeManagementTestRepository
                 .GetCourse(Guid.Parse("37e03ca7-c730-4351-834c-b66f280cdb01"));
