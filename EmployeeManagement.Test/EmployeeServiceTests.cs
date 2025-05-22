@@ -2,13 +2,15 @@
 using EmployeeManagement.Business.Exceptions;
 using EmployeeManagement.DataAccess.Entities;
 using EmployeeManagement.Test.Fixtures;
+using Xunit.Abstractions;
 
 namespace EmployeeManagement.Test
 {
     [Collection("EmployeeServiceCollection")]
-    public class EmployeeServiceTests(EmployeeServiceFixture employeeServiceFixture) //: IClassFixture<EmployeeServiceFixture>
+    public class EmployeeServiceTests(EmployeeServiceFixture employeeServiceFixture, ITestOutputHelper testOutputHelper) //: IClassFixture<EmployeeServiceFixture>
     {
         private readonly EmployeeServiceFixture _employeeServiceFixture = employeeServiceFixture;
+        private readonly ITestOutputHelper _outputHelper = testOutputHelper;
 
         [Fact]
         public void CreateInternalImployee_InternalEmployeeCreated_MustHaveAttendedFirstObligatoryCourse_WithObject()
@@ -32,6 +34,9 @@ namespace EmployeeManagement.Test
         {
             // Act
             var internalEmployee = _employeeServiceFixture.EmployeeService.CreateInternalEmployee("Brooklyn", "Cannon");
+
+            _outputHelper.WriteLine($"Employee after Act: {internalEmployee.FullName}");
+            internalEmployee.AttendedCourses.ForEach(e => _outputHelper.WriteLine($"Course: {e.Title}"));
 
             // Assert
             Assert.Contains(internalEmployee.AttendedCourses, course => course.Id == Guid.Parse("37e03ca7-c730-4351-834c-b66f280cdb01"));
