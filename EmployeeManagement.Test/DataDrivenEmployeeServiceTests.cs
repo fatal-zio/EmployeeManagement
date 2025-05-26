@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.DataAccess.Entities;
 using EmployeeManagement.Test.Fixtures;
+using EmployeeManagement.Test.TestData;
 
 namespace EmployeeManagement.Test
 {
@@ -25,7 +26,39 @@ namespace EmployeeManagement.Test
 
         [Theory]
         [MemberData(nameof(ExampleTestDataForGiveRaise_WithMethod), 1, MemberType = typeof(DataDrivenEmployeeServiceTests))]
-        public async Task GiveRaise_RaiseGiven_EmployeeMinimumRaiseGivenMatchesValue(int raiseGiven, bool expectedValueForMinimumRaiseGiven)
+        public async Task GiveRaise_RaiseGiven_EmployeeMinimumRaiseGivenMatchesValue_WithMemberData(int raiseGiven, bool expectedValueForMinimumRaiseGiven)
+        {
+            // Arrange  
+            var internalEmployee = new InternalEmployee(
+                "Brooklyn", "Cannon", 5, 3000, false, 1);
+
+            // Act
+            await _employeeServiceFixture
+                .EmployeeService.GiveRaiseAsync(internalEmployee, raiseGiven);
+
+            // Assert
+            Assert.Equal(expectedValueForMinimumRaiseGiven, internalEmployee.MinimumRaiseGiven);
+        }
+
+        [Theory]
+        [ClassData(typeof(EmployeeServiceTestData))]
+        public async Task GiveRaise_RaiseGiven_EmployeeMinimumRaiseGivenMatchesValue_WithClassData(int raiseGiven, bool expectedValueForMinimumRaiseGiven)
+        {
+            // Arrange  
+            var internalEmployee = new InternalEmployee(
+                "Brooklyn", "Cannon", 5, 3000, false, 1);
+
+            // Act
+            await _employeeServiceFixture
+                .EmployeeService.GiveRaiseAsync(internalEmployee, raiseGiven);
+
+            // Assert
+            Assert.Equal(expectedValueForMinimumRaiseGiven, internalEmployee.MinimumRaiseGiven);
+        }
+
+        [Theory]
+        [ClassData(typeof(StronglyTypedEmployeeServiceTestData))]
+        public async Task GiveRaise_RaiseGiven_EmployeeMinimumRaiseGivenMatchesValue_WithTypedClassData(int raiseGiven, bool expectedValueForMinimumRaiseGiven)
         {
             // Arrange  
             var internalEmployee = new InternalEmployee(
