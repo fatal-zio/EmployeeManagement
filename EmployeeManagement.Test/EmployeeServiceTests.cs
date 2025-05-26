@@ -30,6 +30,18 @@ namespace EmployeeManagement.Test
         }
 
         [Fact]
+        public void CreateInternalImployee_InternalEmployeeCreated_MustHaveAttendedSecondObligatoryCourse_WithPredicate()
+        {
+            // Arrange
+
+            // Act
+            var internalEmployee = _employeeServiceFixture.EmployeeService.CreateInternalEmployee("Brooklyn", "Cannon");
+
+            // Assert
+            Assert.Contains(internalEmployee.AttendedCourses, course => course.Id == Guid.Parse("1fd115cf-f44c-4982-86bc-a8fe2e4ff83e"));
+        }
+
+        [Fact]
         public void CreateInternalImployee_InternalEmployeeCreated_MustHaveAttendedFirstObligatoryCourse_WithPredicate()
         {
             // Act

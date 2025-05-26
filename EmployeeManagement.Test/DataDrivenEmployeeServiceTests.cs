@@ -23,8 +23,9 @@ namespace EmployeeManagement.Test
                 course => course.Id == courseId);
         }
 
-        [Fact]
-        public async Task GiveRaise_MinimumRaiseGiven_EmployeeMinimumRaiseGivenMustBeTrue()
+        [Theory]
+        [MemberData(nameof(ExampleTestDataForGiveRaise_WithMethod), 1, MemberType = typeof(DataDrivenEmployeeServiceTests))]
+        public async Task GiveRaise_RaiseGiven_EmployeeMinimumRaiseGivenMatchesValue(int raiseGiven, bool expectedValueForMinimumRaiseGiven)
         {
             // Arrange  
             var internalEmployee = new InternalEmployee(
@@ -32,26 +33,10 @@ namespace EmployeeManagement.Test
 
             // Act
             await _employeeServiceFixture
-                .EmployeeService.GiveRaiseAsync(internalEmployee, 100);
+                .EmployeeService.GiveRaiseAsync(internalEmployee, raiseGiven);
 
             // Assert
-            Assert.True(internalEmployee.MinimumRaiseGiven);
-        }
-
-
-        [Fact]
-        public async Task GiveRaise_MoreThanMinimumRaiseGiven_EmployeeMinimumRaiseGivenMustBeFalse()
-        {
-            // Arrange  
-            var internalEmployee = new InternalEmployee(
-                "Brooklyn", "Cannon", 5, 3000, false, 1);
-
-            // Act 
-            await _employeeServiceFixture.EmployeeService
-                .GiveRaiseAsync(internalEmployee, 200);
-
-            // Assert
-            Assert.False(internalEmployee.MinimumRaiseGiven);
+            Assert.Equal(expectedValueForMinimumRaiseGiven, internalEmployee.MinimumRaiseGiven);
         }
 
         public static IEnumerable<object[]> ExampleTestDataForGiveRaise_WithProperty
